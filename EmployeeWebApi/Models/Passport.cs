@@ -1,6 +1,6 @@
 ﻿namespace EmployeeWebApi.Models;
 
-public class Passport
+public sealed class Passport
 {
     public int PassportId { get; set; }
     public string Type { get; set; }

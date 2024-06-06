@@ -1,11 +1,10 @@
 ﻿using Dapper;
-
 using Microsoft.Data.Sqlite;
 using System.Data;
 
-namespace EmployeeWebApi;
+namespace EmployeeWebApi.Data;
 
-public class DatabaseContext
+public sealed class DatabaseContext : IDatabaseContext
 {
     private readonly string _connectionString;
 

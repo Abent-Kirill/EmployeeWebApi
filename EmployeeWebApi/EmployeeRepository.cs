@@ -2,7 +2,6 @@
 
 using EmployeeWebApi.Models;
 using System.Data;
-using System.Data.Common;
 
 namespace EmployeeWebApi;
 

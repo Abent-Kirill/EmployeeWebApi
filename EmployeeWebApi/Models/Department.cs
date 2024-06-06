@@ -1,6 +1,6 @@
 ﻿namespace EmployeeWebApi.Models;
 
-public class Department
+public sealed class Department
 {
     public int DepartmentId { get; set; }
     public string DepartmentName { get; set; }
