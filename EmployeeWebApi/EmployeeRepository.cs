@@ -1,6 +1,7 @@
 ﻿using Dapper;
 
 using EmployeeWebApi.Models;
+
 using System.Data;
 
 namespace EmployeeWebApi;
@@ -59,9 +60,6 @@ public sealed class EmployeeRepository(IDbConnection dbConnection)
         dbConnection.Close();
         return employeeId;
     }
-
-
-
 
     public async Task DeleteEmployee(int id)
     {
@@ -160,7 +158,7 @@ public sealed class EmployeeRepository(IDbConnection dbConnection)
         {
             employeeEntry = employee;
         }
-            employeeEntry.Passport = passport;
+        employeeEntry.Passport = passport;
         employeeEntry.Department = department;
 
         employeeDictionary.Add(employee.Id, employeeEntry);
@@ -172,7 +170,6 @@ public sealed class EmployeeRepository(IDbConnection dbConnection)
 
         return employees.Distinct();
     }
-
 
     public async Task UpdateEmployee(int id, Employee employee)
     {

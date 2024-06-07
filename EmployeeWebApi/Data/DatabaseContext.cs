@@ -4,7 +4,7 @@ using System.Data;
 
 namespace EmployeeWebApi.Data;
 
-public sealed class DatabaseContext : IDatabaseContext
+internal sealed class DatabaseContext : IDatabaseContext
 {
     private readonly string _connectionString;
 

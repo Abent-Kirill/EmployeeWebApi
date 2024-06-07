@@ -27,6 +27,7 @@ public sealed class EmployeeController(EmployeeRepository employeeRepository) : 
     /// <param name="id">id сотрудника</param>
     /// <returns></returns>
     [HttpDelete("{id}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<IActionResult> DeleteEmployee(int id)
     {
         await employeeRepository.DeleteEmployee(id);
@@ -38,7 +39,7 @@ public sealed class EmployeeController(EmployeeRepository employeeRepository) : 
     /// </summary>
     /// <param name="companyId">Id компании</param>
     /// <returns>Список сотрудников</returns>
-    [HttpGet("company/{companyId}")]
+    [HttpGet("Company/{companyId}")]
     public async Task<IActionResult> GetEmployeesByCompanyId(int companyId)
     {
         var employees = await employeeRepository.GetEmployeesByCompanyId(companyId);
@@ -50,7 +51,7 @@ public sealed class EmployeeController(EmployeeRepository employeeRepository) : 
     /// </summary>
     /// <param name="departmentName">Название отдела</param>
     /// <returns>Список сотрудников</returns>
-    [HttpGet("department/{departmentName}")]
+    [HttpGet("Department/{departmentName}")]
     public async Task<IActionResult> GetEmployeesByDepartmentName(string departmentName)
     {
         var employees = await employeeRepository.GetEmployeesByDepartmentName(departmentName);
@@ -64,9 +65,18 @@ public sealed class EmployeeController(EmployeeRepository employeeRepository) : 
     /// <param name="employee">Обновленные данные</param>
     /// <returns></returns>
     [HttpPut("{id}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> UpdateEmployee(int id, [FromBody] Employee employee)
     {
-        await employeeRepository.UpdateEmployee(id, employee);
-        return NoContent();
+        try
+        {
+            await employeeRepository.UpdateEmployee(id, employee);
+            return NoContent();
+        }
+        catch (ArgumentException ex)
+        {
+            return BadRequest(new { ex.Message });
+        }
     }
 }
