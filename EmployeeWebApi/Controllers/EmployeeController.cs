@@ -38,7 +38,7 @@ public sealed class EmployeeController(EmployeeRepository employeeRepository) : 
     /// </summary>
     /// <param name="companyId">Id компании</param>
     /// <returns>Список сотрудников</returns>
-    [HttpGet("{companyId}")]
+    [HttpGet("company/{companyId}")]
     public async Task<IActionResult> GetEmployeesByCompanyId(int companyId)
     {
         var employees = await employeeRepository.GetEmployeesByCompanyId(companyId);
@@ -50,7 +50,7 @@ public sealed class EmployeeController(EmployeeRepository employeeRepository) : 
     /// </summary>
     /// <param name="departmentName">Название отдела</param>
     /// <returns>Список сотрудников</returns>
-    [HttpGet("{departmentName}")]
+    [HttpGet("department/{departmentName}")]
     public async Task<IActionResult> GetEmployeesByDepartmentName(string departmentName)
     {
         var employees = await employeeRepository.GetEmployeesByDepartmentName(departmentName);

@@ -30,7 +30,7 @@ public sealed class EmployeeRepository(IDbConnection dbConnection)
         {
             var departmentQuery = @"
             INSERT INTO Departments (Name, Phone)
-            VALUES (@Name, @Phone);
+            VALUES (@DepartmentName, @Phone);
             SELECT last_insert_rowid();";
             departmentId = await dbConnection.QuerySingleAsync<int>(departmentQuery, new
             {
@@ -42,7 +42,8 @@ public sealed class EmployeeRepository(IDbConnection dbConnection)
         var employeeQuery = @"
         INSERT INTO Employees (Name, Surname, Phone, CompanyId, PassportId, DepartmentId)
         VALUES (@Name, @Surname, @Phone, @CompanyId, @PassportId, @DepartmentId);
-        SELECT last_insert_rowid();";
+        SELECT last_insert_rowid();"
+        ;
 
         var employeeId = await dbConnection.QuerySingleAsync<int>(employeeQuery, new
         {
@@ -58,6 +59,8 @@ public sealed class EmployeeRepository(IDbConnection dbConnection)
         dbConnection.Close();
         return employeeId;
     }
+
+
 
 
     public async Task DeleteEmployee(int id)
@@ -88,21 +91,21 @@ public sealed class EmployeeRepository(IDbConnection dbConnection)
     public async Task<IEnumerable<Employee>> GetEmployeesByCompanyId(int companyId)
     {
         var query = @"
-    SELECT 
-    e.*, 
-    COALESCE(p.Id, 0) as PassportId, 
-    p.Type as Type, 
-    p.Number as Number, 
-    COALESCE(d.Id, 0) as DepartmentId, 
-    d.Name as DepartmentName, 
-    d.Phone as Phone 
-FROM 
-    Employees e
-LEFT JOIN 
-    Passports p ON e.PassportId = p.Id
-LEFT JOIN 
-    Departments d ON e.DepartmentId = d.Id
-WHERE e.CompanyId = @CompanyId";
+            SELECT 
+            e.*, 
+            COALESCE(p.Id, 0) as PassportId, 
+            p.Type as Type, 
+            p.Number as Number, 
+            COALESCE(d.Id, 0) as DepartmentId, 
+            d.Name as DepartmentName, 
+            d.Phone as Phone 
+        FROM 
+            Employees e
+        LEFT JOIN 
+            Passports p ON e.PassportId = p.Id
+        LEFT JOIN 
+            Departments d ON e.DepartmentId = d.Id
+        WHERE e.CompanyId = @CompanyId";
 
         var employeeDictionary = new Dictionary<int, Employee>();
 
@@ -130,23 +133,22 @@ WHERE e.CompanyId = @CompanyId";
     public async Task<IEnumerable<Employee>> GetEmployeesByDepartmentName(string departmentName)
     {
         var query = @"
-    SELECT 
-    e.*, 
-    COALESCE(p.Id, 0) as PassportId, 
-    p.Type as Type, 
-    p.Number as Number, 
-    COALESCE(d.Id, 0) as DepartmentId, 
-    d.Name as DepartmentName, 
-    d.Phone as Phone 
-FROM 
-    Employees e
-LEFT JOIN 
-    Passports p ON e.PassportId = p.Id
-LEFT JOIN 
-    Departments d ON e.DepartmentId = d.Id
-WHERE 
-    d.Name = @DepartmentName
-";
+            SELECT 
+            e.*, 
+            COALESCE(p.Id, 0) as PassportId, 
+            p.Type as Type, 
+            p.Number as Number, 
+            COALESCE(d.Id, 0) as DepartmentId, 
+            d.Name as DepartmentName, 
+            d.Phone as Phone 
+        FROM 
+            Employees e
+        LEFT JOIN 
+            Passports p ON e.PassportId = p.Id
+        LEFT JOIN 
+            Departments d ON e.DepartmentId = d.Id
+        WHERE 
+            d.Name = @DepartmentName";
 
         var employeeDictionary = new Dictionary<int, Employee>();
 
