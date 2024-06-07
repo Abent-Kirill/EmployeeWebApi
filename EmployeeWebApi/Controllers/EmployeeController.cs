@@ -65,14 +65,14 @@ public sealed class EmployeeController(EmployeeRepository employeeRepository) : 
     /// <param name="employee">Обновленные данные</param>
     /// <returns></returns>
     [HttpPut("{id}")]
-    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> UpdateEmployee(int id, [FromBody] Employee employee)
     {
         try
         {
             await employeeRepository.UpdateEmployee(id, employee);
-            return NoContent();
+            return Ok();
         }
         catch (ArgumentException ex)
         {

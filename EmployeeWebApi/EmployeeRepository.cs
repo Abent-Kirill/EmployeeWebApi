@@ -91,10 +91,10 @@ public sealed class EmployeeRepository(IDbConnection dbConnection)
         var query = @"
             SELECT 
             e.*, 
-            COALESCE(p.Id, 0) as PassportId, 
+            p.Id as PassportId, 
             p.Type as Type, 
             p.Number as Number, 
-            COALESCE(d.Id, 0) as DepartmentId, 
+            d.Id as DepartmentId, 
             d.Name as DepartmentName, 
             d.Phone as Phone 
         FROM 
@@ -133,10 +133,10 @@ public sealed class EmployeeRepository(IDbConnection dbConnection)
         var query = @"
             SELECT 
             e.*, 
-            COALESCE(p.Id, 0) as PassportId, 
+            p.Id as PassportId, 
             p.Type as Type, 
             p.Number as Number, 
-            COALESCE(d.Id, 0) as DepartmentId, 
+            d.Id as DepartmentId, 
             d.Name as DepartmentName, 
             d.Phone as Phone 
         FROM 
